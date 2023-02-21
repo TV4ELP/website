@@ -1,10 +1,10 @@
 <?php
 
 class DatabaseEngine {
-    private static $_HOST = "localhost";
-    private static $_TABLE = "website";
-    private static $_USER = "main";
-    private static $_PASSWORD = "main";
+    private static string $_HOST = "localhost";
+    private static string $_TABLE = "website";
+    private static string $_USER = "main";
+    private static string $_PASSWORD = "main";
 
     private $connection = null;
 
