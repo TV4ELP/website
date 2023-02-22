@@ -8,4 +8,6 @@
     - [ ] Include Default CSS
     - [ ] Include Default JS
 - [ ] Replace static includes with autoloader
+- [ ] Backend Login via Discord
+...
 - [ ] Full Page caching (we can't keep re-parsing the same thing over and over)
