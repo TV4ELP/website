@@ -7,6 +7,7 @@
 class Parser {
 
     private string $_template = "";
+    private ?DatabaseEngine $_databaseEngine = null;
 
     //These are needed to match the blocks we want to replace in our template
     private static string $_beforeDelimiter = "{{";
@@ -32,6 +33,18 @@ class Parser {
 
         $templateString = $this->LoadTemplate();
 
+        // Due to PHP handling lookahead/lookbehind stupidly, we have each match 2 times... 
+        // This cleans it up
+        $this->ReplaceTemplateBlocks($templateString);
+        
+        echo $templateString;
+    }
+
+    //
+    // Recursivly Replace every Variable until nothing is left. 
+    // This includes variables that resolve into variables 
+    //
+    private function ReplaceTemplateBlocks (string &$template) : void {
         $matches = array();
 
         //This magic regex is rather simple if you can read it, so let me explain: 
@@ -42,14 +55,47 @@ class Parser {
         // (?=X) means "before you match, check if there is 'X' after the match, and only then match it" And exclude X from the match
         // So now we match everything that starts with an X and ends with an X, but in our match the X is not contained
         $regexPattern = '/(?<=' . self::$_beforeDelimiter . ')(.*)(?=' . self::$_afterDelimiter . ')/';
-        preg_match_all($regexPattern, $templateString, $matches);
-
-        // Due to PHP handling lookahead/lookbehind stupidly, we have each match 2 times... 
-        // This cleans it up
-        $matches = array_unique($matches);
+        $didMatch = preg_match($regexPattern, $template, $matches);
         
-        echo $templateString;
+        // IF found something, parse it
+        if($didMatch){
+            $templateVar = $matches[0];
+            $replacement = $this->GetVarData($templateVar);
+
+            $replacePattern = '/(' . self::$_beforeDelimiter . $templateVar . self::$_afterDelimiter . ')/';
+            $template = preg_replace($replacePattern, $replacement, $template);
+
+            //Recursivly try to replace everything
+            $this->ReplaceTemplateBlocks($template);
+        }
+
+        //We have not found a single match? I guess we can stop now
+        return;
     }
+
+    //
+    // TODO: DEFINE A STRUCT LIKE THING THAT HAS THE VAR AND THE REPLACEMENT AND AN INFO WHERE TO FIND THE REPLACMENT
+    // DEFINE IF IT IS A DIRECT REPLACEMENT OR A PATH. WHEN PATH USE THAT. ALSO DEFINE IF THERE IS PHP CODE THAT WE WANT TO 
+    // EXECUTE AFTER REPLACEMENTS
+    //
+    private function GetVarData($templateVar){
+        $database = $this->GetDataBaseConnection();
+        $templateData = $database->GetTemplatePath($templateVar);
+        return $templateData;
+    }
+
+
+    //
+    // Singleton Database
+    //
+    private function GetDataBaseConnection() : DatabaseEngine {
+        if($this->_databaseEngine == null){
+            $this->_databaseEngine = new DatabaseEngine();
+        }
+
+        return $this->_databaseEngine;
+    }
+
 
     //
     // Just load the file and make sure all is nice 

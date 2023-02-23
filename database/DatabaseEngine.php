@@ -37,6 +37,26 @@ class DatabaseEngine {
         return $data;
     } 
 
+    //
+    // Find a coresponding file and additional information for a variable
+    //
+    public function GetTemplatePath(string $templateVarName){
+        ///TODO JUST HARDCODED FOR NOW
+        if($templateVarName == "japan"){
+            return "uff";
+        }
+
+        if($templateVarName == "peru"){
+            return "ABC{{lol}}";
+        }
+
+        if($templateVarName == "lol"){
+            return "DEF";
+        }
+
+        return "";
+    }
+
 }
 
 
