@@ -4,7 +4,7 @@
     - [X] Match variables in template
     - [ ] Replace variables in template
         - [X] Recursive replacement
-        - [ ] Use Data from Database for replacements
+        - [X] Use Data from Database for replacements
         - [ ] Execute any PHP in templates before output
     - [ ] Create Default Footer
     - [ ] Create Default Header
