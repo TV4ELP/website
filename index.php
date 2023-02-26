@@ -55,17 +55,15 @@ function GetRealPath(array $paths) : string {
 // Search for a template with the correct path
 //
 function GetRealFileFromPath(string $path) : string {
-    $fileList = glob('templates' . $path. '.php');
+    $file = Parser::FindFile($path);
     
-    //If we match somehow more, just use the first
-    //Matching more than one is bad
-    if(count($fileList) > 0){
-        return $fileList[0];
-    }
-
     //If we can't find something, it means we have stray site in our DB
     //This is a valid case for a 404
-    return "templates/sites/404.html";
+    if($file == ""){
+        return "templates/sites/404.html";
+    }
+
+    return $file;
 }
 
 

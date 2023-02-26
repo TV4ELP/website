@@ -78,10 +78,50 @@ class Parser {
     // DEFINE IF IT IS A DIRECT REPLACEMENT OR A PATH. WHEN PATH USE THAT. ALSO DEFINE IF THERE IS PHP CODE THAT WE WANT TO 
     // EXECUTE AFTER REPLACEMENTS
     //
-    private function GetVarData($templateVar){
+    private function GetVarData(string $templateVar) : string {
+
         $database = $this->GetDataBaseConnection();
         $templateData = $database->GetTemplatePath($templateVar);
-        return $templateData;
+
+        //No result, no fun
+        if(count($templateData) == 0){
+            return "";
+        }
+
+        $data = $templateData[0];
+        //Local Files we want to directly fetch and use
+        if($data['localFile'] == true){
+
+            $file = self::FindFile($data['replacement'], "");
+
+            //Couldn't find a file, weird
+            if($file == ""){
+                //TODO: Maybe log this
+                return $file;
+            }
+            $content = file_get_contents($file);
+            return $content;
+        }
+
+        //Ohterwise return directly
+        return $data['replacement'];
+    }
+
+
+    //
+    // Find a file based on a relative path
+    //
+    public static function FindFile(string $path, string $extension = ".php") : string {
+
+        $fileList = glob('templates' . $path . $extension);
+        print_r($fileList);
+        //If we match somehow more, just use the first
+        //Matching more than one is bad
+        if(count($fileList) > 0){
+            return $fileList[0];
+        }
+
+        return "";
     }
 
 

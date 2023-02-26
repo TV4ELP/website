@@ -37,24 +37,19 @@ class DatabaseEngine {
         return $data;
     } 
 
+
     //
     // Find a coresponding file and additional information for a variable
     //
-    public function GetTemplatePath(string $templateVarName){
-        ///TODO JUST HARDCODED FOR NOW
-        if($templateVarName == "japan"){
-            return "uff";
-        }
+    public function GetTemplatePath(string $templateVarName) : array{
 
-        if($templateVarName == "peru"){
-            return "ABC{{lol}}";
-        }
+        $sql = "SELECT * FROM template_variables WHERE var = \"$templateVarName\"";
 
-        if($templateVarName == "lol"){
-            return "DEF";
-        }
+        $result = $this->connection->query($sql);
+        //We could use mysqli_fetch_row (since each var is unique, but the speed difference is virtually not measureable)
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        return "";
+        return $data;
     }
 
 }
