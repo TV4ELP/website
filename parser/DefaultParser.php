@@ -68,15 +68,10 @@ class Parser {
             //Recursivly try to replace everything
             $this->ReplaceTemplateBlocks($template);
         }
-
-        //We have not found a single match? I guess we can stop now
-        return;
     }
 
     //
-    // TODO: DEFINE A STRUCT LIKE THING THAT HAS THE VAR AND THE REPLACEMENT AND AN INFO WHERE TO FIND THE REPLACMENT
-    // DEFINE IF IT IS A DIRECT REPLACEMENT OR A PATH. WHEN PATH USE THAT. ALSO DEFINE IF THERE IS PHP CODE THAT WE WANT TO 
-    // EXECUTE AFTER REPLACEMENTS
+    // Ask the Database what kind of content we need and replaces it with ewither a local file or a direct string
     //
     private function GetVarData(string $templateVar) : string {
 
@@ -92,6 +87,7 @@ class Parser {
         //Local Files we want to directly fetch and use
         if($data['localFile'] == true){
 
+            //The extension is generally saved in the DB, don't forward it
             $file = self::FindFile($data['replacement'], "");
 
             //Couldn't find a file, weird
@@ -114,7 +110,6 @@ class Parser {
     public static function FindFile(string $path, string $extension = ".php") : string {
 
         $fileList = glob('templates' . $path . $extension);
-        print_r($fileList);
         //If we match somehow more, just use the first
         //Matching more than one is bad
         if(count($fileList) > 0){
@@ -159,10 +154,62 @@ class Parser {
     // about outputting anything before
     //
     public function OutputContent() : void {
+        $this->CleanCache();
+        if($this->FindCachedFile() == false){
+            //Start the output buffer, cache everything and remove the output buffer
+            ob_start();
+            $this->Parse();
+            $this->CacheFile();
+            ob_end_clean();
+        }
+
+        //We can assume in any case that we have a cache now. So require it
+        //This way we can still let the server parse any php left in the template
+        require_once($this->CachePath());
         
-        ob_start();
-        $this->Parse();
-        ob_end_flush();
+    }
+
+
+    //
+    // Take the output we parsed and Cache it aka, save it
+    // This allows us to execute php still left over after parsing
+    //
+    private function CacheFile() : void {
+        //Get the current content in the Output Buffer 
+        $content = ob_get_contents();
+
+        $path = $this->CachePath();
+        file_put_contents($path, $content);
+    }
+
+
+    //
+    // Just Check if the Cached File exists
+    //
+    private function FindCachedFile() : bool {
+        $path = $this->CachePath();
+
+        $file = file_exists($path);
+        return $file;
+    }
+
+    //
+    // Single point for the Cache path
+    // Mayber shoule be a member variable, don't know yet
+    //
+    private function CachePath() : string {
+        $cleanTemaplate = str_replace("/", "_", $this->_template);
+        return "cache/". $cleanTemaplate;
+    }
+
+    //
+    // Clean all cached files
+    //
+    private function CleanCache() : void {
+        if(isset($_GET["cc"])){
+            //Map all results from glob to a callback, in this case the unlink/delete function
+            array_map( 'unlink', array_filter((array) glob("cache/*") ) );
+        }
     }
 
 

@@ -38,7 +38,8 @@ function GetRegisteredPaths() : array {
 // No path = /sites/home template
 //
 function GetRealPath(array $paths) : string {
-    $requestUrl = $_SERVER['REQUEST_URI'];
+    //strtok only gets everything until the first "?" Easier than explode
+    $requestUrl = strtok($_SERVER['REQUEST_URI'], "?");
     foreach($paths as $row){
 
         if (trim($requestUrl) === $row[0]){
