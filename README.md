@@ -2,10 +2,10 @@
 
 - [ ] Get Template Engine to create home page
     - [X] Match variables in template
-    - [ ] Replace variables in template
+    - [X] Replace variables in template
         - [X] Recursive replacement
         - [X] Use Data from Database for replacements
-        - [ ] Execute any PHP in templates before output
+        - [X] Execute any PHP in templates before output
     - [ ] Create Default Footer
     - [ ] Create Default Header
     - [ ] Include Default CSS
@@ -13,4 +13,4 @@
 - [ ] Replace static includes with autoloader
 - [ ] Backend Login via Discord
 ...
-- [ ] Full Page caching (we can't keep re-parsing the same thing over and over)
+- [X] Full Page caching (we can't keep re-parsing the same thing over and over) // This was free funnily enough with Executing PHP in the template
