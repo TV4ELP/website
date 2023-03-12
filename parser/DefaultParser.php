@@ -77,7 +77,6 @@ class Parser {
 
         $database = $this->GetDataBaseConnection();
         $templateData = $database->GetTemplatePath($templateVar);
-
         //No result, no fun
         if(count($templateData) == 0){
             return "";

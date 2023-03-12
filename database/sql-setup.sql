@@ -19,3 +19,5 @@ CREATE TABLE `website`.`template_variables` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 INSERT INTO `website`.`template_variables` (`var`, `replacement`, `localFile`) VALUES ('default_header', '/blocks/header.html', '1');
+INSERT INTO `website`.`template_variables` (`var`, `replacement`, `localFile`) VALUES ('main-menu', '/blocks/main-menu.html', '1');
+INSERT INTO `website`.`template_variables` (`var`, `replacement`, `localFile`) VALUES ('default-css', '/style.css', '1');

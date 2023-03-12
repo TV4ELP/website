@@ -1,0 +1,30 @@
+.header-grid {
+    display: grid;
+    grid-template-areas: 
+    ". . header-logo . ."
+    ". navigation navigation navigation . ";
+}
+
+.header-logo {
+    grid-area: header-logo;
+    place-self: center;
+}
+
+.header-navigation {
+    grid-area: navigation;
+    place-self: center;
+    width: 100%;
+}
+
+
+.header-navigation nav{
+    text-align: center;
+}
+
+.header-navigation li {
+    display: inline;
+    
+    font-size: 2rem;
+    padding: 5%;
+}
+

@@ -1,6 +1,8 @@
-<h1>TEST</h1>
+<!DOCTYPE html>
+<head>
+    <style>
+        {{default-css}}
+    </style>
+</head>
+
 {{default_header}}
-<?php echo "aaaaaaaa";?>
-{{japan}}
-and also 
-{{peru}}
