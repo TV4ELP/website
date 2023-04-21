@@ -48,7 +48,6 @@ function GetRealPath(array $paths) : string {
     }
 
     //Fallback will be always home page
-    return "";
     return $paths[0][1];
 }
 

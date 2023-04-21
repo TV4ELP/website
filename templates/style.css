@@ -1,8 +1,15 @@
+body {
+    margin: 0px;
+}
+
+
 .header-grid {
     display: grid;
     grid-template-areas: 
     ". . header-logo . ."
     ". navigation navigation navigation . ";
+
+    background-image: url(/img/banner.webp);
 }
 
 .header-logo {

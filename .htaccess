@@ -1,4 +1,11 @@
 RewriteEngine on
+
+#Rewrite everything that contains an image to the correct directoy
+RewriteRule ^img/(.*)$ /templates/img/$1 [NC,L,QSA]
+
+#Rewrite every File that doesn't exist 
 RewriteCond %{REQUEST_FILENAME} !-f
+#Rewrite every directory that doesn't exist
 RewriteCond %{REQUEST_FILENAME} !-d
+#To our index which handles the rest
 RewriteRule ^(.*)$ /index.php?path=$1 [NC,L,QSA]
