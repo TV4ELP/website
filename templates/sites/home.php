@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <style>
-        {{default-css}}
-    </style>
+    {{default-css}}
 </head>
 
 {{default_header}}

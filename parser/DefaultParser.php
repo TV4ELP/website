@@ -108,6 +108,12 @@ class Parser {
     //
     public static function FindFile(string $path, string $extension = ".php") : string {
 
+        //If a File is mentioned with an extension (we go by the dot), then don't 
+        //try to search for a file with an extension
+        if(str_contains($path, '.')){
+            $extension = "";
+        }
+
         $fileList = glob('templates' . $path . $extension);
         //If we match somehow more, just use the first
         //Matching more than one is bad

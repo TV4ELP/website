@@ -7,8 +7,8 @@
         - [X] Use Data from Database for replacements
         - [X] Execute any PHP in templates before output
     - [ ] Create Default Footer
-    - [ ] Create Default Header
-    - [ ] Include Default CSS
+    - [X] Create Default Header //It's not fancy, but it works
+    - [X] Include Default CSS
     - [ ] Include Default JS
 - [ ] Replace static includes with autoloader
 - [ ] Backend Login via Discord
