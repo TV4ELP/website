@@ -71,7 +71,7 @@ class Parser {
     }
 
     //
-    // Ask the Database what kind of content we need and replaces it with ewither a local file or a direct string
+    // Ask the Database what kind of content we need and replaces it with either a local file or a direct string
     //
     private function GetVarData(string $templateVar) : string {
 
@@ -200,7 +200,7 @@ class Parser {
 
     //
     // Single point for the Cache path
-    // Mayber shoule be a member variable, don't know yet
+    // Maybe shoule be a member variable, don't know yet
     //
     private function CachePath() : string {
         $cleanTemaplate = str_replace("/", "_", $this->_template);
