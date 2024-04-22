@@ -1,10 +1,10 @@
 <?php
-require_once('database/DatabaseEngine.php');
 require_once('parser/DefaultParser.php');
+require_once('config.php');
 //Every Request will be redirected to here!
 
 /*
-    To configure SQL Settings check /database/DatabaseEngine.php
+    To configure SQL Settings check the relevant Databae Engine Provider
 */
 
 
@@ -27,7 +27,7 @@ $parser->OutputContent();
 function GetRegisteredPaths() : array {
     $paths = array();
 
-    $conn = new DatabaseEngine();
+    $conn = Config::DatabaseEngine();
     $paths = $conn->GetTableAsFlatArray('paths');
 
     return $paths;
