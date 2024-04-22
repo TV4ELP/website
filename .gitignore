@@ -2,3 +2,4 @@ cache/
 templates/img/
 templates/style.css
 .vscode/launch.json
+database/config.json
