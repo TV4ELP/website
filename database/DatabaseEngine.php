@@ -21,9 +21,4 @@ abstract class DatabaseEngine {
     //
     public abstract function GetTemplatePath(string $templateVarName) : array;
 
-
-    public static function GetDatabaseEngine() {
-        
-    }
-
 }
