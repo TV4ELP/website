@@ -130,7 +130,7 @@ class Parser {
     //
     private function GetDataBaseConnection() : DatabaseEngine {
         if($this->_databaseEngine == null){
-            $this->_databaseEngine = new DatabaseEngine();
+            $this->_databaseEngine = Config::DatabaseEngine();
         }
 
         return $this->_databaseEngine;
